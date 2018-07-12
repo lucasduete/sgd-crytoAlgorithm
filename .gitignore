@@ -1,0 +1,6 @@
+/target/
+/src/main/resources/.vagrant/
+/.idea/
+crytoAlgorithm.iml
+nb-configuration.xml
+
