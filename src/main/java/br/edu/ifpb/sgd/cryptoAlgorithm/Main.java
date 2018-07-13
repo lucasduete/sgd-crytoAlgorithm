@@ -12,8 +12,8 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-
-
+        //testAes();
+        testRsa();
     }
 
     private static void testAes() throws Exception {
