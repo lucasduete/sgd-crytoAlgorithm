@@ -2,6 +2,8 @@ package br.edu.ifpb.sgd.cryptoAlgorithm;
 
 import br.edu.ifpb.sgd.cryptoAlgorithm.implementantions.AesCryptoAlgorithm;
 import br.edu.ifpb.sgd.cryptoAlgorithm.implementantions.RsaCryptoAlgorithm;
+import br.edu.ifpb.sgd.cryptoAlgorithm.keystore.AesKeyStore;
+import br.edu.ifpb.sgd.cryptoAlgorithm.keystore.RsaKeyStore;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
@@ -11,38 +13,34 @@ import java.security.KeyPairGenerator;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+//        AesKeyStore aesKeyStore = new AesKeyStore();
+//        RsaKeyStore rsaKeyStore = new RsaKeyStore();
+
+//        aesKeyStore.generateKeyStore();
+//        rsaKeyStore.generateKeyStore();
 
 
-
+        testAes();
+        System.out.printf("\n\n");
+        testRsa();
     }
 
     private static void testAes() throws Exception {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(256);
-
-        byte[] key = keyGenerator.generateKey().getEncoded();
-        SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
-
         CryptoAlgorithm cryptoAlgorithm = new AesCryptoAlgorithm();
 
-        String cifrado = cryptoAlgorithm.crypt("Hello World", keySpec);
+        String cifrado = cryptoAlgorithm.crypt("Hello World", new AesKeyStore().getKey());
 
         System.out.println(cifrado);
 
-        System.out.println(cryptoAlgorithm.decrypt(cifrado, keySpec));
+        System.out.println(cryptoAlgorithm.decrypt(cifrado, new AesKeyStore().getKey()));
     }
 
     private static void testRsa() throws Exception {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(4096);
-
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-
         CryptoAlgorithm cryptoAlgorithm = new RsaCryptoAlgorithm();
 
-        String cifrado = cryptoAlgorithm.crypt("Hello World", keyPair.getPublic());
+        String cifrado = cryptoAlgorithm.crypt("Hello World", new RsaKeyStore().getPublicKey());
         System.out.println(cifrado);
 
-        System.out.println(cryptoAlgorithm.decrypt(cifrado, keyPair.getPrivate()));
+        System.out.println(cryptoAlgorithm.decrypt(cifrado, new RsaKeyStore().getPrivateKey()));
     }
 }
